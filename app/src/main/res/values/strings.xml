@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">cameraTakeDemo</string>
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    
+    <string name="filter">滤镜</string>
+    <string name="enhance">增强</string>
+    <string name="adjust">拉伸缩放</string>
+    <string name="addText">添加文字</string>
+    
+    <string name="luminosity">亮度</string>
+    <string name="saturation">饱和度</string>
+    <string name="hue">色调</string>
+    
+    <string name="huaijiu">怀旧</string>
+    <string name="heibai">黑白</string>
+    <string name="fudiao">浮雕</string>
+    <string name="jingxiang">镜像</string>
+    <string name="dipian">底片</string>
+    
+    <string name="horizontal">水平</string>
+    <string name="vertical">纵向</string>
+    <string name="zoom">缩放</string>
+
+    <string name="imageName">图片名称</string>
+
+
+</resources>

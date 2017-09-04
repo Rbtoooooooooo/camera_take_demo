@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/filterImageView"
+        android:layout_above="@+id/fiterLinearLayout"
+        android:src="@drawable/leaf" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButton"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:text="@string/save"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fiterLinearLayout"
+        android:layout_margin="5dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/huaijiuButton"
+            android:layout_weight="1"
+            android:onClick="btnHuaiJiu"
+            android:text="@string/huaijiu"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fudiaoButton"
+            android:layout_weight="1"
+            android:onClick="btnFuDiao"
+            android:text="@string/fudiao"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/guangzhaoButton"
+            android:layout_weight="1"
+            android:onClick="btnGuangZhao"
+            android:text="@string/jingxiang"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/heibaiButton"
+            android:layout_weight="1"
+            android:onClick="btnHeiBai"
+            android:text="@string/heibai"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dipianButton"
+            android:layout_weight="1"
+            android:onClick="btnDiPian"
+            android:text="@string/dipian"/>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
