@@ -4,80 +4,80 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class HandleActivity extends AppCompatActivity {
 
-    private Button enhanceButton;
-    private Button filterButton;
-    private Button adjustButton;
-    private Button addTextButton;
-    private ImageView iv_handle;
-    private TextView tv_main;
-    private Context mContext;
+    private Button zengqiang;
+    private Button lvjing;
+    private Button lashen;
+    private Button tianjiawenzi;
+    private ImageView iv;
+    private Context pContext;
     private String path;
-    private Bitmap bmp;
-    private Intent mIntent;
-
-    private TextView tv_handle;
-
+    private Bitmap pBitmap;
+    private Intent pIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_handle);
-        mContext = this;
+        setContentView(R.layout.chuli);
 
-        enhanceButton = (Button)findViewById(R.id.enhanceButton);
-        filterButton = (Button)findViewById(R.id.filterButton);
-        adjustButton = (Button)findViewById(R.id.adjustButton);
-        addTextButton = (Button) findViewById(R.id.addTextButton);
-        iv_handle = (ImageView) findViewById(R.id.handleImageView);
+        init();
 
-        mIntent = getIntent();
-        path = mIntent.getStringExtra("path");
-        bmp = BitmapFactory.decodeFile(path);
-        iv_handle.setImageBitmap(bmp);
+    }
 
-        enhanceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+    private void init() {
+//        上下文问本activity
+        pContext = this;
+
+//        绑定
+        zengqiang = (Button)findViewById(R.id.zengqiang);
+        lvjing = (Button)findViewById(R.id.lvjing);
+        lashen = (Button)findViewById(R.id.lashen);
+        tianjiawenzi = (Button) findViewById(R.id.tianjiawenzi);
+        iv = (ImageView) findViewById(R.id.piv);
+
+//        得到path 并且得到图片，将其显示出来
+        pIntent = getIntent();
+        path = pIntent.getStringExtra("path");
+        pBitmap = BitmapFactory.decodeFile(path);
+        iv.setImageBitmap(pBitmap);
+
+//        以下四个带着path进行界面跳转
+        zengqiang.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, EnhanceActivity.class);
-                intent.putExtra("path", path);
-                startActivity(intent);
+                Intent pIntent = new Intent(pContext, EnhanceActivity.class);
+                pIntent.putExtra("path", path);
+                startActivity(pIntent);
             }
         });
 
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        lvjing.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, FilterActivity.class);
-                intent.putExtra("path", path);
-                startActivity(intent);
+                Intent pIntent = new Intent(pContext, FilterActivity.class);
+                pIntent.putExtra("path", path);
+                startActivity(pIntent);
             }
         });
 
-        adjustButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        lashen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AdjustActivity.class);
-                intent.putExtra("path", path);
-                startActivity(intent);
+                Intent pIntent = new Intent(pContext, AdjustActivity.class);
+                pIntent.putExtra("path", path);
+                startActivity(pIntent);
             }
         });
 
-        addTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        tianjiawenzi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AddTextActivity.class);
-                intent.putExtra("path", path);
-                startActivity(intent);
+                Intent pIntent = new Intent(pContext, AddTextActivity.class);
+                pIntent.putExtra("path", path);
+                startActivity(pIntent);
             }
         });
     }

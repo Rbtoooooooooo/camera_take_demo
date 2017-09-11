@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="480dp"
-        android:id="@+id/handleImageView"
+        android:id="@+id/piv"
         android:layout_margin="5dp"
         android:layout_above="@+id/firstLinearLayout" />
 
@@ -19,14 +19,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/filterButton"
+            android:id="@+id/lvjing"
             android:text="@string/filter"
             android:layout_weight="1" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/adjustButton"
+            android:id="@+id/lashen"
             android:text="@string/adjust"
             android:layout_weight="1" />
     </LinearLayout>
@@ -40,14 +40,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/addTextButton"
+            android:id="@+id/tianjiawenzi"
             android:text="@string/addText"
             android:layout_weight="1" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/enhanceButton"
+            android:id="@+id/zengqiang"
             android:layout_marginBottom="5dp"
             android:text="@string/enhance"
             android:layout_weight="1" />

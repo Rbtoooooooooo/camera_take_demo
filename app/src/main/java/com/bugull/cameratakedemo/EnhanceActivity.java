@@ -12,69 +12,75 @@ import android.widget.SeekBar;
 
 public class EnhanceActivity extends Activity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener{
 
-    private ImageView mImageView;
-    private SeekBar mSeekbarhue,mSeekbarSaturation, mSeekbarLum;
-    private Button btn;
+    private ImageView piv;
+    private SeekBar hue, sat, lum;
+    private Button pButton;
     private static int MAX_VALUE = 255;
     private static int MID_VALUE = 127;
     private float mHue,mStauration, mLum;
-    private Bitmap bitmap, newBitmap;
-    private int flag = -1;
-
+    private Bitmap pBitmap, nBitmap;
     private String path;
-    private Intent mIntent;
+    private Intent pIntent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enhance);
+        setContentView(R.layout.zengqiang);
 
-        mIntent = getIntent();
-        path = mIntent.getStringExtra("path");
-        bitmap = BitmapFactory.decodeFile(path);
+        init();
+    }
 
-        mImageView = (ImageView) findViewById(R.id.enhanceImageView);
+    private void init() {
+//        获取path，并将path下的图片转换为Bitmap类型数据
+        pIntent = getIntent();
+        path = pIntent.getStringExtra("path");
+        pBitmap = BitmapFactory.decodeFile(path);
 
-        mSeekbarhue = (SeekBar) findViewById(R.id.hueSeekBar);
-        mSeekbarSaturation = (SeekBar) findViewById(R.id.saturationSeekBar);
-        mSeekbarLum = (SeekBar) findViewById(R.id.luminositySeekBar);
-        btn = (Button) findViewById(R.id.saveButton);
+//        绑定
+        piv = (ImageView) findViewById(R.id.enhanceImageView);
+        hue = (SeekBar) findViewById(R.id.hueSeekBar);
+        sat = (SeekBar) findViewById(R.id.saturationSeekBar);
+        lum = (SeekBar) findViewById(R.id.luminositySeekBar);
+        pButton = (Button) findViewById(R.id.sbtn);
 
-        mSeekbarhue.setOnSeekBarChangeListener(this);
-        mSeekbarSaturation.setOnSeekBarChangeListener(this);
-        mSeekbarLum.setOnSeekBarChangeListener(this);
-        btn.setOnClickListener(this);
+//        设置监听函数
+        hue.setOnSeekBarChangeListener(this);
+        sat.setOnSeekBarChangeListener(this);
+        lum.setOnSeekBarChangeListener(this);
+        pButton.setOnClickListener(this);
 
-        mSeekbarhue.setMax(MAX_VALUE);
-        mSeekbarSaturation.setMax(MAX_VALUE);
-        mSeekbarLum.setMax(MAX_VALUE);
+//        设置最大值
+        hue.setMax(MAX_VALUE);
+        sat.setMax(MAX_VALUE);
+        lum.setMax(MAX_VALUE);
 
-        mSeekbarhue.setProgress(MID_VALUE);
-        mSeekbarSaturation.setProgress(MID_VALUE);
-        mSeekbarLum.setProgress(MID_VALUE);
+//        设置初始值
+        hue.setProgress(MID_VALUE);
+        sat.setProgress(MID_VALUE);
+        lum.setProgress(MID_VALUE);
 
-        mImageView.setImageBitmap(bitmap);
+        piv.setImageBitmap(pBitmap);
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         switch (seekBar.getId()) {
             case R.id.hueSeekBar:
-                flag = 0;
+//               得到新的hue值
                 mHue = (progress - MID_VALUE) * 1.0F / MID_VALUE * 180;
                 break;
             case R.id.saturationSeekBar:
-                flag = 1;
+//               得到新的saturation值
                 mStauration = progress * 1.0F / MID_VALUE;
                 break;
             case R.id.luminositySeekBar:
-                flag = 2;
+//               得到新的saturation值
                 mLum = progress * 1.0F / MID_VALUE;
                 break;
         }
-        newBitmap = ImageHelper.handleImageEffect(bitmap, mHue, mStauration, mLum, flag);
-        mImageView.setImageBitmap(newBitmap);
+        nBitmap = HandleFunctions.zengqiang(pBitmap, mHue, mStauration, mLum);
+        piv.setImageBitmap(nBitmap);
 
     }
 
@@ -89,8 +95,9 @@ public class EnhanceActivity extends Activity implements SeekBar.OnSeekBarChange
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.saveButton:
-                ImageHelper.saveBitmapFile(newBitmap, this);
+//            保存图片
+            case R.id.sbtn:
+                HandleFunctions.saveImage(nBitmap, this);
                 break;
         }
     }

@@ -1,13 +1,11 @@
 package com.bugull.cameratakedemo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-
-import android.app.Activity;
-import android.graphics.Matrix;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -18,19 +16,21 @@ import android.widget.TextView;
 
 public class AdjustActivity extends Activity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
-    private int minWidth = 80;
-    private int minHeight = 60;
+    private int width = 80;
+    private int height = 60;
 
-    private ImageView imageView;
-    private Button btn;
-    private TextView textView1;
-    private SeekBar seekBar1, seekBar2;
+//    控件
+    private ImageView pImageView;
+    private Button pButton;
+    private TextView pTextView;
+    private SeekBar seekbar_h, seekbar_v;
 
-    private Matrix matrix = new Matrix();
-    private int newWidth = 80;
-    private int newHeight = 60;
+//    新的高宽初始值
+    private int newW = 80;
+    private int newH = 60;
 
-    private Intent intent;
+//    用于接受数据
+    private Intent pIntent;
     private String path;
     private Bitmap bitmap, newBitmap;
 
@@ -38,47 +38,66 @@ public class AdjustActivity extends Activity implements SeekBar.OnSeekBarChangeL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.active_adjust);
+        setContentView(R.layout.lashen);
 
-        intent = getIntent();
-        path = intent.getStringExtra("path");
+        init();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+//            将图片保存到实现设置好的路径下
+            case R.id.sbtn:
+                newBitmap =((BitmapDrawable) ((ImageView) pImageView).getDrawable()).getBitmap();
+                HandleFunctions.saveImage(newBitmap, this);
+                break;
+        }
+    }
+
+    private void init() {
+        //        接受界面跳转带过来的path字符串，并且将该路径下的图片转换为Bitmap
+        pIntent = getIntent();
+        path = pIntent.getStringExtra("path");
         bitmap = BitmapFactory.decodeFile(path);
 
-        imageView = (ImageView) findViewById(R.id.imageview);
+//        绑定各个控件
+        pImageView = (ImageView) findViewById(R.id.imageview);
+        seekbar_h = (SeekBar) findViewById(R.id.seekbar1);
+        seekbar_v = (SeekBar) findViewById(R.id.seekbar2);
+        pTextView = (TextView) findViewById(R.id.textview1);
+        pButton = (Button) findViewById(R.id.sbtn);
+//        给imageView设置图片
+        pImageView.setImageBitmap(bitmap);
 
-        imageView.setImageBitmap(bitmap);
+//        设置ImageView的显示方式，便于拉伸
+        pImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        seekBar1 = (SeekBar) findViewById(R.id.seekbar1);
-        seekBar2 = (SeekBar) findViewById(R.id.seekbar2);
-        textView1 = (TextView) findViewById(R.id.textview1);
-        btn = (Button) findViewById(R.id.saveButton);
-
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
-        btn.setOnClickListener(this);
-
-        seekBar1.setOnSeekBarChangeListener(this);
-        seekBar2.setOnSeekBarChangeListener(this);
+//        设置监听事件
+        pButton.setOnClickListener(this);
+        seekbar_h.setOnSeekBarChangeListener(this);
+        seekbar_v.setOnSeekBarChangeListener(this);
 
         // 一个结构描述的一般信息显示，比如大小、密度、和字体缩放
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        seekBar1.setMax(displayMetrics.widthPixels - minWidth);
-        seekBar2.setMax(displayMetrics.heightPixels - minHeight - 500);
+        seekbar_h.setMax(displayMetrics.widthPixels - width);
+        seekbar_v.setMax(displayMetrics.heightPixels - height - 500);
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         switch (seekBar.getId()) {
             case R.id.seekbar1:
-                newWidth = i + minWidth;
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(newWidth, newHeight));
-                textView1.setText("图像宽度：" + newWidth + " 图像高度：" + newHeight);
+//                将ImageView的width参数设置为newW
+                newW = i + width;
+                pImageView.setLayoutParams(new LinearLayout.LayoutParams(newW, newH));
+                pTextView.setText("宽度：" + newW + " 高度：" + newH);
                 break;
             case R.id.seekbar2:
-                newHeight = i + minHeight;
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(newWidth, newHeight));
-                textView1.setText("图像宽度：" + newWidth + " 图像高度：" + newHeight);
+//                将ImageView的height参数设置为newH
+                newH = i + height;
+                pImageView.setLayoutParams(new LinearLayout.LayoutParams(newW, newH));
+                pTextView.setText("宽度：" + newW + " 高度：" + newH);
                 break;
         }
     }
@@ -93,13 +112,5 @@ public class AdjustActivity extends Activity implements SeekBar.OnSeekBarChangeL
 
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.saveButton:
-                newBitmap =((BitmapDrawable) ((ImageView) imageView).getDrawable()).getBitmap();
-                ImageHelper.saveBitmapFile(newBitmap, this);
-                break;
-        }
-    }
+
 }

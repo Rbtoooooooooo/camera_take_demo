@@ -9,11 +9,17 @@ import android.support.v4.content.ContextCompat;
  * Created by Fsh on 2016/12/29.
  */
 
-public class PermissionsChecker {
-    private final Context mContext;
+public class CheckPermissions {
+    private final Context p;
 
-    public PermissionsChecker(Context context) {
-        mContext = context.getApplicationContext();
+    public CheckPermissions(Context context) {
+        p = context.getApplicationContext();
+    }
+
+    // 判断是否缺少权限
+    private boolean lacksPermission(String permission) {
+        return ContextCompat.checkSelfPermission(p, permission) ==
+                PackageManager.PERMISSION_DENIED;
     }
 
     // 判断权限集合
@@ -26,10 +32,6 @@ public class PermissionsChecker {
         return false;
     }
 
-    // 判断是否缺少权限
-    private boolean lacksPermission(String permission) {
-        return ContextCompat.checkSelfPermission(mContext, permission) ==
-                PackageManager.PERMISSION_DENIED;
-    }
+
 
 }

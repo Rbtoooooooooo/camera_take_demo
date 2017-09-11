@@ -14,7 +14,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView iv;
     private TextView tv;
     private Button post_btn, take_btn, album_btn, handle_btn;
-    private PermissionsChecker mPermissionsChecker; // 权限检测器
+    private CheckPermissions mPermissionsChecker; // 权限检测器
     static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA};
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
-        mPermissionsChecker = new PermissionsChecker(this);
+        mPermissionsChecker = new CheckPermissions(this);
     }
 
     @Override
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 打开系统相机
      */
     private void openCamera() {
-        File file = new FileStorage().createIconFile();
+        File file = new SaveImage().iconFile();
 //        imageName = file.toString();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             imageUri = FileProvider.getUriForFile(MainActivity.this, "com.bugull.cameratakedemo.fileprovider", file);//通过FileProvider创建一个content类型的Uri
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 裁剪
      */
     private void cropPhoto() {
-        File file = new FileStorage().createCropFile();
+        File file = new SaveImage().cropFile();
         cImageUri = Uri.fromFile(file);
         imageName = file.toString();
         Uri outputUri = Uri.fromFile(file);//缩略图保存地址
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startPermissionsActivity() {
-        PermissionsActivity.startActivityForResult(this, REQUEST_PERMISSION,
+        PActivity.startActivityForResult(this, REQUEST_PERMISSION,
                 PERMISSIONS);
     }
 
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case REQUEST_PERMISSION://权限请求
-                if (resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+                if (resultCode == PActivity.DENIED) {
                     finish();
                 } else {
                     if (isClickCamera) {

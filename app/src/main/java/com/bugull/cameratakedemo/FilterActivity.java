@@ -29,7 +29,7 @@ public class FilterActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.active_filter);
+        setContentView(R.layout.lvjing);
 
         iv_filter = (ImageView) findViewById(R.id.filterImageView);
         btn_huaijiu = (Button) findViewById(huaijiuButton);
@@ -37,7 +37,7 @@ public class FilterActivity extends Activity implements View.OnClickListener{
         btn_guangzhao = (Button) findViewById(R.id.guangzhaoButton);
         btn_heibai = (Button) findViewById(R.id.heibaiButton);
         btn_dipian = (Button) findViewById(R.id.dipianButton);
-        btn_save = (Button) findViewById(R.id.saveButton);
+        btn_save = (Button) findViewById(R.id.sbtn);
 
         btn_huaijiu.setOnClickListener(this);
         btn_fudiao.setOnClickListener(this);
@@ -57,23 +57,23 @@ public class FilterActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.huaijiuButton:
-                newbmp = ImageHelper.pikaGoGoGo(bmp, ImageHelper.FiterKind.HUAIJIU);
+                newbmp = HandleFunctions.pikaGoGoGo(bmp, HandleFunctions.Lvjing.HUAIJIU);
                 break;
             case R.id.fudiaoButton:
-                newbmp = ImageHelper.pikaGoGoGo(bmp, ImageHelper.FiterKind.FUDIAO);
+                newbmp = HandleFunctions.pikaGoGoGo(bmp, HandleFunctions.Lvjing.FUDIAO);
                 break;
             case R.id.guangzhaoButton:
                 // 未完成 !!!!!!!!!!!
-                newbmp = ImageHelper.pikaGoGoGo(bmp, ImageHelper.FiterKind.JINGXIANG);;
+                newbmp = HandleFunctions.pikaGoGoGo(bmp, HandleFunctions.Lvjing.JINGXIANG);;
                 break;
             case R.id.heibaiButton:
-                newbmp = ImageHelper.pikaGoGoGo(bmp, ImageHelper.FiterKind.HEIBAI);
+                newbmp = HandleFunctions.pikaGoGoGo(bmp, HandleFunctions.Lvjing.HEIBAI);
                 break;
             case R.id.dipianButton:
-                newbmp = ImageHelper.pikaGoGoGo(bmp, ImageHelper.FiterKind.DIPIAN);
+                newbmp = HandleFunctions.pikaGoGoGo(bmp, HandleFunctions.Lvjing.DIPIAN);
                 break;
-            case R.id.saveButton:
-                ImageHelper.saveBitmapFile(newbmp, this);
+            case R.id.sbtn:
+                HandleFunctions.saveImage(newbmp, this);
                 break;
         }
         iv_filter.setImageBitmap(newbmp);
